@@ -3,9 +3,9 @@ package models;
 public class Recipe {
     private String title;
     private int numberOfPeopleServed;
-    private String dificultyLevel;
+    private DificultyLevel dificultyLevel;
 
-    public Recipe(String title, int numberOfPeopleServed, String dificultyLevel) {
+    public Recipe(String title, int numberOfPeopleServed, DificultyLevel dificultyLevel) {
         this.title = title;
         this.numberOfPeopleServed = numberOfPeopleServed;
         this.dificultyLevel = dificultyLevel;
@@ -27,11 +27,20 @@ public class Recipe {
         this.numberOfPeopleServed = numberOfPeopleServed;
     }
 
-    public String getDificultyLevel() {
+    public DificultyLevel getDificultyLevel() {
         return dificultyLevel;
     }
 
-    public void setDificultyLevel(String dificultyLevel) {
+    public void setDificultyLevel(DificultyLevel dificultyLevel) {
         this.dificultyLevel = dificultyLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "title='" + title + '\'' +
+                ", numberOfPeopleServed=" + numberOfPeopleServed +
+                ", dificultyLevel='" + dificultyLevel + '\'' +
+                '}';
     }
 }

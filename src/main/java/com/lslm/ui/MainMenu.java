@@ -1,4 +1,4 @@
-package ui;
+package com.lslm.ui;
 
 import java.util.Scanner;
 

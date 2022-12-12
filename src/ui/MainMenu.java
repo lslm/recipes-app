@@ -22,7 +22,7 @@ public class MainMenu {
     public void process(int option) {
         switch (option) {
             case 1: {
-                System.out.println("------- CADASTRANDO NOVA RECEITA -------");
+                RecipesMenu.show();
             }
         }
     }

@@ -1,14 +1,26 @@
-package models;
+package com.lslm.models;
+
+import java.util.UUID;
 
 public class Recipe {
+    private UUID id;
     private String title;
     private int numberOfPeopleServed;
     private DificultyLevel dificultyLevel;
 
-    public Recipe(String title, int numberOfPeopleServed, DificultyLevel dificultyLevel) {
+    public Recipe(UUID id, String title, int numberOfPeopleServed, DificultyLevel dificultyLevel) {
+        this.id = id;
         this.title = title;
         this.numberOfPeopleServed = numberOfPeopleServed;
         this.dificultyLevel = dificultyLevel;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getTitle() {

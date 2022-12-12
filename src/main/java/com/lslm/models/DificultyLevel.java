@@ -1,4 +1,4 @@
-package models;
+package com.lslm.models;
 
 public enum DificultyLevel {
     EASY,

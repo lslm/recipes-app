@@ -1,10 +1,10 @@
-package ui;
+package com.lslm.ui;
 
-import models.DificultyLevel;
-import models.Recipe;
+import com.lslm.models.DificultyLevel;
+import com.lslm.models.Recipe;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class RecipesMenu {
     public static void show() {
@@ -33,7 +33,7 @@ public class RecipesMenu {
         System.out.print("Quantas pessoas essa receita serve: ");
         int numberOfPeopleServed = scanner.nextInt();
 
-        Recipe newRecipe = new Recipe(title, numberOfPeopleServed, dificultyLevel);
+        Recipe newRecipe = new Recipe(UUID.randomUUID(), title, numberOfPeopleServed, dificultyLevel);
         System.out.println(newRecipe);
     }
 }

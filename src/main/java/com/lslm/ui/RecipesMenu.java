@@ -2,11 +2,15 @@ package com.lslm.ui;
 
 import com.lslm.models.DificultyLevel;
 import com.lslm.models.Recipe;
+import com.lslm.repositories.RecipesRepository;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class RecipesMenu {
+    static RecipesRepository recipesRepository = new RecipesRepository();
+
     public static void show() {
         System.out.println("------- CADASTRANDO NOVA RECEITA -------");
 
@@ -34,6 +38,11 @@ public class RecipesMenu {
         int numberOfPeopleServed = scanner.nextInt();
 
         Recipe newRecipe = new Recipe(UUID.randomUUID(), title, numberOfPeopleServed, dificultyLevel);
-        System.out.println(newRecipe);
+        recipesRepository.createRecipe(newRecipe);
+    }
+
+    public static void showAllRecipes() {
+        List<Recipe> recipes = recipesRepository.findRecipes();
+        recipes.forEach(System.out::println);
     }
 }

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Configuration {
     private static final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/recipes_app";
     private static final String CONNECTION_USERNAME = "lucassantos";
-    private static final String CONNECTION_PASSWORD = "senhaerrada";
+    private static final String CONNECTION_PASSWORD = "admin";
 
     private static Connection connection;
 
@@ -23,6 +23,7 @@ public class Configuration {
         if (connection != null) {
             try {
                 connection.close();
+                connection = null;
             } catch (SQLException exception) {
                 System.out.println("Ocorreu um erro ao tentar fechar a conexão");
             }

@@ -11,6 +11,7 @@ public class MainMenu {
 
         do {
             System.out.println("1 - Cadastrar receitas");
+            System.out.println("2 - Exibir receitas cadastradas");
 
             System.out.print("Escolha uma opção: ");
             option = scanner.nextInt();
@@ -23,6 +24,11 @@ public class MainMenu {
         switch (option) {
             case 1: {
                 RecipesMenu.show();
+                break;
+            }
+
+            case 2: {
+                RecipesMenu.showAllRecipes();
             }
         }
     }

@@ -12,6 +12,7 @@ public class MainMenu {
         do {
             System.out.println("1 - Cadastrar receitas");
             System.out.println("2 - Exibir receitas cadastradas");
+            System.out.println("3 - Adicionar passos para uma receita");
 
             System.out.print("Escolha uma opção: ");
             option = scanner.nextInt();
@@ -29,6 +30,11 @@ public class MainMenu {
 
             case 2: {
                 RecipesMenu.showAllRecipes();
+                break;
+            }
+
+            case  3: {
+                RecipesMenu.showStepCreationMenu();
             }
         }
     }

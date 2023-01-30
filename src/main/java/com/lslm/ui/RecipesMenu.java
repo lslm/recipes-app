@@ -45,4 +45,18 @@ public class RecipesMenu {
         List<Recipe> recipes = recipesRepository.findRecipes();
         recipes.forEach(System.out::println);
     }
+
+    public static void showStepCreationMenu() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Qual a receita que você quer adicionar o modo de preparo? ");
+        UUID recipeId = UUID.fromString(scanner.nextLine());
+        // Buscar a receita pelo id informado
+        Recipe recipe = recipesRepository.findRecipeById(recipeId);
+
+        System.out.println(recipe);
+        // Perguntar pelo modo de preparo da receita (passos)
+
+
+    }
 }

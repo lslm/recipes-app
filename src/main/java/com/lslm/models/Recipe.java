@@ -1,5 +1,7 @@
 package com.lslm.models;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class Recipe {
@@ -7,6 +9,7 @@ public class Recipe {
     private String title;
     private int numberOfPeopleServed;
     private DificultyLevel dificultyLevel;
+    private List<Step> steps;
 
     public Recipe(UUID id, String title, int numberOfPeopleServed, DificultyLevel dificultyLevel) {
         this.id = id;

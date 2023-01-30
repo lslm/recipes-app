@@ -57,4 +57,33 @@ public class RecipesRepository {
 
         return recipes;
     }
+
+    public Recipe findRecipeById(UUID recipeId) {
+        String query = "SELECT * FROM recipes WHERE id = ?";
+
+        try {
+            Connection connection = Configuration.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setObject(1, recipeId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                UUID id = resultSet.getObject("id", UUID.class);
+                String title  = resultSet.getString("title");
+                int numberOfPeopleServed = resultSet.getInt("number_of_people_served");
+                DificultyLevel dificultyLevel =  DificultyLevel.valueOf(resultSet.getString("dificulty_level"));
+
+                return new Recipe(id, title, numberOfPeopleServed, dificultyLevel);
+            }
+
+            statement.close();
+            Configuration.closeConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
 }

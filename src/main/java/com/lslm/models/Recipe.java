@@ -52,10 +52,6 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Recipe{" +
-                "title='" + title + '\'' +
-                ", numberOfPeopleServed=" + numberOfPeopleServed +
-                ", dificultyLevel='" + dificultyLevel + '\'' +
-                '}';
+        return title;
     }
 }

@@ -1,6 +1,8 @@
 package com.lslm;
 
+import com.lslm.ui.MainScreen;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -13,9 +15,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        HBox hBox = new HBox(new Text("Olá"));
+        Parent mainScreen = new MainScreen().build();
 
-        Scene scene = new Scene(hBox, 800, 600);
+        Scene scene = new Scene(mainScreen, 800, 600);
         stage.setScene(scene);
         stage.show();
     }

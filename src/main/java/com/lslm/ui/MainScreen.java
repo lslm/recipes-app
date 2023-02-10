@@ -6,7 +6,11 @@ import com.lslm.repositories.RecipesRepository;
 import com.lslm.repositories.StepsRepository;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
@@ -30,7 +34,28 @@ public class MainScreen {
             stepsListView.getItems().setAll(steps);
         });
 
-        return new HBox(recipesListView, stepsListView);
+
+
+        HBox hBox = new HBox(recipesListView, stepsListView);
+
+        MenuBar menuBar = buildMenuBar();
+
+        return new VBox(menuBar, hBox);
+    }
+
+    private MenuBar buildMenuBar() {
+        Menu recipesMenu = new Menu("Receitas");
+        MenuItem addRecipeMenuItem = new MenuItem("Adicionar receita");
+
+        addRecipeMenuItem.setOnAction(e -> {
+            NewRecipeWindow newRecipeWindow = new NewRecipeWindow();
+            newRecipeWindow.open();
+        });
+
+        recipesMenu.getItems().add(addRecipeMenuItem);
+
+        MenuBar menuBar = new MenuBar(recipesMenu);
+        return menuBar;
     }
 
 }

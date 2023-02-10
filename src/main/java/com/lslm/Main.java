@@ -1,14 +1,22 @@
 package com.lslm;
 
-import com.lslm.repositories.Configuration;
-import com.lslm.ui.MainMenu;
+import com.lslm.ui.MainScreen;
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+public class Main extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-public class Main {
-    public static void main(String[] args) throws SQLException {
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.show();
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent mainScreen = new MainScreen().build();
+
+        Scene scene = new Scene(mainScreen, 800, 600);
+        stage.setScene(scene);
+        stage.show();
     }
 }

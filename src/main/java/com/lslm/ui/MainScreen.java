@@ -19,6 +19,11 @@ public class MainScreen {
     private RecipesRepository recipesRepository = new RecipesRepository();
     private StepsRepository stepsRepository = new StepsRepository();
 
+    private void updateRecipeListView(ListView recipeListView) {
+        List<Recipe> updatedRecipes = recipesRepository.findRecipes();
+        recipeListView.getItems().setAll(updatedRecipes);
+    }
+
     public Parent build() {
         ListView recipesListView = new ListView();
         ListView stepsListView = new ListView();
@@ -34,22 +39,23 @@ public class MainScreen {
             stepsListView.getItems().setAll(steps);
         });
 
-
-
         HBox hBox = new HBox(recipesListView, stepsListView);
 
-        MenuBar menuBar = buildMenuBar();
+        MenuBar menuBar = buildMenuBar(recipesListView);
 
         return new VBox(menuBar, hBox);
     }
 
-    private MenuBar buildMenuBar() {
+    private MenuBar buildMenuBar(ListView recipesListView) {
         Menu recipesMenu = new Menu("Receitas");
         MenuItem addRecipeMenuItem = new MenuItem("Adicionar receita");
 
         addRecipeMenuItem.setOnAction(e -> {
             NewRecipeWindow newRecipeWindow = new NewRecipeWindow();
-            newRecipeWindow.open();
+
+            newRecipeWindow.open(() -> {
+                updateRecipeListView(recipesListView);
+            });
         });
 
         recipesMenu.getItems().add(addRecipeMenuItem);

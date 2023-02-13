@@ -46,9 +46,11 @@ public class NewRecipeWindow {
                 createRecipeButton);
     }
 
-    public void open() {
+    public void open(ScreenCallback callback) {
         Stage stage = new Stage();
-
+        stage.setOnCloseRequest(e -> {
+            callback.call();
+        });
         Scene scene = new Scene(buildForm(), 500, 400);
         stage.setScene(scene);
         stage.show();

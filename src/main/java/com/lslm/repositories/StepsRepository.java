@@ -42,4 +42,23 @@ public class StepsRepository {
         return steps;
     }
 
+    public void createStep(Step newStep) {
+        String query = "INSERT INTO steps(id, recipe_id, description) VALUES (?, ?, ?)";
+
+        try {
+            Connection connection = Configuration.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setObject(1, newStep.getId());
+            preparedStatement.setObject(2, newStep.getRecipeId());
+            preparedStatement.setString(3, newStep.getDescription());
+
+            preparedStatement.executeUpdate();
+            Configuration.closeConnection();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

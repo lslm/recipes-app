@@ -5,10 +5,7 @@ import com.lslm.models.Step;
 import com.lslm.repositories.RecipesRepository;
 import com.lslm.repositories.StepsRepository;
 import javafx.scene.Parent;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -39,7 +36,18 @@ public class MainScreen {
             stepsListView.getItems().setAll(steps);
         });
 
-        HBox hBox = new HBox(recipesListView, stepsListView);
+        Button openNewStepWindowButton = new Button("Adicionar passo à receita");
+
+        openNewStepWindowButton.setOnAction(event -> {
+            // Pegar a receita que está selecionada
+            // abrir uma janela com os passos da receita selecionada
+            Recipe selectedRecipe = (Recipe) recipesListView.getSelectionModel().getSelectedItem();
+            AddStepWindow addStepWindow = new AddStepWindow(selectedRecipe);
+            addStepWindow.open();
+        });
+
+        VBox stepsBox = new VBox(stepsListView, openNewStepWindowButton);
+        HBox hBox = new HBox(recipesListView, stepsBox);
 
         MenuBar menuBar = buildMenuBar(recipesListView);
 

@@ -61,4 +61,21 @@ public class StepsRepository {
         }
     }
 
+    public void removeStep(Step newStep) {
+        String query = "DELETE FROM steps WHERE id = ?";
+
+        try {
+            Connection connection = Configuration.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setObject(1, newStep.getId());
+
+            preparedStatement.executeUpdate();
+            Configuration.closeConnection();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

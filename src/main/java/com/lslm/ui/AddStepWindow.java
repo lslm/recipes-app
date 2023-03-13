@@ -1,8 +1,8 @@
 package com.lslm.ui;
 
+import com.lslm.controllers.StepsController;
 import com.lslm.models.Recipe;
 import com.lslm.models.Step;
-import com.lslm.repositories.StepsRepository;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -17,27 +17,30 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AddStepWindow {
     private Stage stage;
     private Scene scene;
 
-    private Recipe selectedRecipe;
-    private StepsRepository stepsRepository;
+    private ListView stepsListView;
+    private StepsController stepsController;
 
     public AddStepWindow(Recipe selectedRecipe) {
-        this.selectedRecipe = selectedRecipe;
-        this.stepsRepository = new StepsRepository();
+        this.stepsController = new StepsController(selectedRecipe);
+
+        this.stepsListView = new ListView();
+
         this.stage = new Stage();
         this.scene = new Scene(buildScreen(), 500, 400);
         stage.setScene(scene);
     }
 
-    private Parent buildScreen() {
-        ListView stepsListView = new ListView();
+    private void updateStepsList() {
+        stepsListView.getItems().setAll(stepsController.findAllSteps());
+    }
 
-        List<Step> steps = stepsRepository.findStepsByRecipeId(selectedRecipe.getId());
+    private Parent buildScreen() {
+        List<Step> steps = stepsController.findAllSteps();
         stepsListView.getItems().setAll(steps);
 
         Label newStepLabel = new Label("Novo passo");
@@ -49,15 +52,24 @@ public class AddStepWindow {
         newStepHBox.setPadding(new Insets(8, 0, 8, 0));
 
         Button createStepButton = new Button("Adicionar passo");
+        Button removeStepButton = new Button("Remover passo");
 
         createStepButton.setOnAction(event -> {
             String newStepText = newStepTextField.getText();
-            Step newStep = new Step(UUID.randomUUID(), selectedRecipe.getId(), newStepText);
-            stepsRepository.createStep(newStep);
-            stepsListView.getItems().add(newStep);
+            stepsController.createStep(newStepText);
+            updateStepsList();
         });
 
-        VBox vBox = new VBox(stepsListView, newStepHBox, createStepButton);
+        removeStepButton.setOnAction(event -> {
+            Step selectedStep = (Step) stepsListView.getSelectionModel().getSelectedItem();
+            stepsController.removeStep(selectedStep);
+            updateStepsList();
+        });
+
+        HBox actionButtons = new HBox(createStepButton, removeStepButton);
+        actionButtons.setSpacing(8);
+
+        VBox vBox = new VBox(stepsListView, newStepHBox, actionButtons);
 
         vBox.setPadding(new Insets(8, 8, 8, 8));
 

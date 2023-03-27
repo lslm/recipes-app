@@ -3,18 +3,25 @@ package com.lslm.controllers;
 import com.lslm.models.Recipe;
 import com.lslm.models.Step;
 import com.lslm.repositories.StepsRepository;
+import com.lslm.ui.AddStepWindow;
 
 import java.util.List;
 import java.util.UUID;
 
-public class StepsController {
-
+public class AddStepController {
     private Recipe recipe;
     private StepsRepository stepsRepository;
 
-    public StepsController(Recipe recipe) {
+    private AddStepWindow addStepWindow;
+
+    public AddStepController(Recipe recipe) {
         this.recipe = recipe;
         this.stepsRepository = new StepsRepository();
+        this.addStepWindow = new AddStepWindow(this);
+    }
+
+    public void openScreen() {
+        addStepWindow.open();
     }
 
     public List<Step> findAllSteps() {

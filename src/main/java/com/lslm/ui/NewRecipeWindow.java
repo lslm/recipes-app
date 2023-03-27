@@ -1,5 +1,6 @@
 package com.lslm.ui;
 
+import com.lslm.controllers.NewRecipeController;
 import com.lslm.models.DificultyLevel;
 import com.lslm.models.Recipe;
 import com.lslm.repositories.RecipesRepository;
@@ -14,6 +15,12 @@ import java.util.UUID;
 public class NewRecipeWindow {
 
     private RecipesRepository recipesRepository = new RecipesRepository();
+
+    private NewRecipeController newRecipeController;
+
+    public NewRecipeWindow(NewRecipeController controller) {
+        newRecipeController = controller;
+    }
 
     private Parent buildForm() {
         TextField titleTextField = new TextField();

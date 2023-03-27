@@ -1,9 +1,7 @@
 package com.lslm;
 
-import com.lslm.ui.MainScreen;
+import com.lslm.controllers.MainScreenController;
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,11 +10,8 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent mainScreen = new MainScreen().build();
-
-        Scene scene = new Scene(mainScreen, 800, 600);
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage stage) {
+        MainScreenController mainScreenController = new MainScreenController(stage);
+        mainScreenController.open();
     }
 }

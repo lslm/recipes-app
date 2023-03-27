@@ -1,6 +1,6 @@
 package com.lslm.ui;
 
-import com.lslm.controllers.StepsController;
+import com.lslm.controllers.AddStepController;
 import com.lslm.models.Recipe;
 import com.lslm.models.Step;
 import javafx.geometry.Insets;
@@ -23,11 +23,10 @@ public class AddStepWindow {
     private Scene scene;
 
     private ListView stepsListView;
-    private StepsController stepsController;
+    private AddStepController stepsController;
 
-    public AddStepWindow(Recipe selectedRecipe) {
-        this.stepsController = new StepsController(selectedRecipe);
-
+    public AddStepWindow(AddStepController controller) {
+        this.stepsController = controller;
         this.stepsListView = new ListView();
 
         this.stage = new Stage();

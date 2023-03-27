@@ -1,10 +1,12 @@
 package com.lslm.ui;
 
+import com.lslm.controllers.AddStepController;
+import com.lslm.controllers.MainScreenController;
+import com.lslm.controllers.NewRecipeController;
 import com.lslm.models.Recipe;
 import com.lslm.models.Step;
-import com.lslm.repositories.RecipesRepository;
-import com.lslm.repositories.StepsRepository;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,38 +14,42 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 public class MainScreen {
+    private MainScreenController mainScreenController;
 
-    private RecipesRepository recipesRepository = new RecipesRepository();
-    private StepsRepository stepsRepository = new StepsRepository();
+    private final int DEFAULT_WIDTH = 800;
+    private final int DEFAULT_HEIGHT = 600;
+
+    public MainScreen(MainScreenController controller) {
+        this.mainScreenController = controller;
+    }
 
     private void updateRecipeListView(ListView recipeListView) {
-        List<Recipe> updatedRecipes = recipesRepository.findRecipes();
+        List<Recipe> updatedRecipes = mainScreenController.findRecipes();
         recipeListView.getItems().setAll(updatedRecipes);
     }
 
-    public Parent build() {
+    public void build() {
         ListView recipesListView = new ListView();
         ListView stepsListView = new ListView();
         stepsListView.setMinWidth(500);
 
-        List<Recipe> recipes = recipesRepository.findRecipes();
+        List<Recipe> recipes = mainScreenController.findRecipes();
 
         recipes.forEach(recipe -> recipesListView.getItems().add(recipe));
 
         recipesListView.setOnMouseClicked(event -> {
             Recipe selectedRecipe = (Recipe) recipesListView.getSelectionModel().getSelectedItem();
-            List<Step> steps = stepsRepository.findStepsByRecipeId(selectedRecipe.getId());
+            List<Step> steps = mainScreenController.findStepsByRecipeId(selectedRecipe.getId());
             stepsListView.getItems().setAll(steps);
         });
 
         Button openNewStepWindowButton = new Button("Adicionar passo à receita");
 
         openNewStepWindowButton.setOnAction(event -> {
-            // Pegar a receita que está selecionada
-            // abrir uma janela com os passos da receita selecionada
             Recipe selectedRecipe = (Recipe) recipesListView.getSelectionModel().getSelectedItem();
-            AddStepWindow addStepWindow = new AddStepWindow(selectedRecipe);
-            addStepWindow.open();
+
+            AddStepController addStepController = new AddStepController(selectedRecipe);
+            addStepController.openScreen();
         });
 
         VBox stepsBox = new VBox(stepsListView, openNewStepWindowButton);
@@ -51,7 +57,11 @@ public class MainScreen {
 
         MenuBar menuBar = buildMenuBar(recipesListView);
 
-        return new VBox(menuBar, hBox);
+        VBox mainVBox = new VBox(menuBar, hBox);
+
+        Scene scene = new Scene(mainVBox, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.mainScreenController.getMainStage().setScene(scene);
+        this.mainScreenController.getMainStage().show();
     }
 
     private MenuBar buildMenuBar(ListView recipesListView) {
@@ -59,11 +69,17 @@ public class MainScreen {
         MenuItem addRecipeMenuItem = new MenuItem("Adicionar receita");
 
         addRecipeMenuItem.setOnAction(e -> {
-            NewRecipeWindow newRecipeWindow = new NewRecipeWindow();
+//            NewRecipeWindow newRecipeWindow = new NewRecipeWindow();
+//
+//            newRecipeWindow.open(() -> {
+//                updateRecipeListView(recipesListView);
+//            });
 
-            newRecipeWindow.open(() -> {
+            NewRecipeController newRecipeController = new NewRecipeController(() -> {
                 updateRecipeListView(recipesListView);
             });
+
+            newRecipeController.open();
         });
 
         recipesMenu.getItems().add(addRecipeMenuItem);
